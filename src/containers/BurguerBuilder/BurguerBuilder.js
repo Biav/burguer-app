@@ -7,19 +7,19 @@ class BurguerBuilder extends Component {
     state = {
         ingredients: {
             salad: {
-                total: 1,
+                total: 0,
                 price: 0.4
             },
             cheese: {
-                total: 1,
+                total: 0,
                 price: 1
             },
             meat: {
-                total: 1,
+                total: 0,
                 price: 2
             },
             bacon: {
-                total: 1,
+                total: 0,
                 price: 2
             }
         },
