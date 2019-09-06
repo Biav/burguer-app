@@ -6,21 +6,26 @@ import './BurgerControls.css'
 class BurgerControls extends Component {
 
     render() {
-        let burgerIngredients = [];
 
-        Object.keys(this.props.ingredients).map((ingredient, index) => {
-            burgerIngredients.push(
+        const burgerIngredients = Object.keys(this.props.ingredients).map((ingredient, index) => {
+            
+            console.log(this.props.ingredients[ingredient].total);
+
+            let buttonDisabled = (this.props.ingredients[ingredient].total > 0) ? false : true;
+
+            return (
                 <BurgerControl key={ ingredient } name={ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
                                added = {() => this.props.addIngredient(ingredient) }
-                               removed = { () => this.props.removeIngredient(ingredient) } />
+                               removed = { () => this.props.removeIngredient(ingredient) } buttonDisabled = { buttonDisabled }/>
             );
-            return false;
         });
 
         return (
             <div className="controls" >
                 {burgerIngredients}
-                <Order cancelBurger = { () => this.props.cancelBurger() }/>
+                <Order ingredients = { this.props.ingredients } 
+                       currentPrice = { this.props.currentPrice }
+                       cancelBurger = { () => this.props.cancelBurger() }/>
             </div>
         )
     }

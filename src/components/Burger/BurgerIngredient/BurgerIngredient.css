@@ -19,6 +19,13 @@
     min-height: 40px;
 }
 
+.burger {
+  max-width: 500px;
+  height: 250px;
+  margin: 0 auto;
+  overflow: auto;
+}
+
 .Seeds1 {
     width: 10%;
     height: 15%;

@@ -9,10 +9,8 @@ class Burguer extends Component {
 
         Object.keys(this.props.ingredients).map((ingredient, index) => {
             let total = this.props.ingredients[ingredient];
-            console.log(this.props.ingredients[ingredient]);
             if(total.total > 0) {
                 for(let i = 0; i < total.total; i++) {
-                    console.log(ingredient, index, i);
                     ingredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1);
                     burger.push(<BurgerIngredient key={ingredient + i} type={ingredient}></BurgerIngredient>);
                 }
@@ -28,7 +26,7 @@ class Burguer extends Component {
         }
         
         return (
-            <div>
+            <div className="burger">
                 <BurgerIngredient type="BreadTop"></BurgerIngredient>
                 {burger}
                 <BurgerIngredient type="BreadBottom"></BurgerIngredient>
