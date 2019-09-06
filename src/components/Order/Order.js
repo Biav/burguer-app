@@ -7,7 +7,7 @@ class Order extends Component {
         return (
             <div>
                 <Button basic color='red' onClick = { this.props.cancelBurger }>Cancel</Button>
-                <Modal/>
+                <Modal order = { this.props.ingredients } currentPrice = { this.props.currentPrice } />
             </div>
         );
     }

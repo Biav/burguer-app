@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Aux from '../../hoc/Auxiliar';
+import Menu from './Menu/Menu';
 
 const layout = (props) => (
 
     <Aux>
-        <div>Menu</div>
+        <Menu/>
         <main>
             {props.children}
         </main>

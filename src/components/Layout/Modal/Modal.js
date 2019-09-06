@@ -1,21 +1,32 @@
-import React from 'react'
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Button, Header, Modal } from 'semantic-ui-react'
 import './Modal.css';
 
-const ModalOrder = () => (
-  <Modal trigger={<Button basic color='blue'>Order Now</Button>}>
-    <Modal.Header>Select a Photo</Modal.Header>
-    <Modal.Content image>
-      <Modal.Description>
-        <Header>Default Profile Image</Header>
-        <p>
-          We've found the following gravatar image associated with your e-mail
-          address.
-        </p>
-        <p>Is it okay to use this photo?</p>
-      </Modal.Description>
-    </Modal.Content>
-  </Modal>
-)
+class ModalOrder extends Component {
+
+  render () {
+    const burgerIngredients = Object.keys(this.props.order).map( (ingredient) => { 
+      return (<div key = {ingredient}> 
+                {ingredient} : 
+                { this.props.order[ingredient].total }
+              </div>);
+    });
+
+    return (
+      <Modal trigger={<Button basic color='blue'>Order Now</Button>}>
+        <Modal.Header>Your Order</Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+            <Header>You burger: $ { this.props.currentPrice } </Header>
+            <div>
+              { burgerIngredients }
+            </div>
+            <div>Continue to checkout</div>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
+    );
+  }
+}
 
 export default ModalOrder;

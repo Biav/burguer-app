@@ -5,14 +5,14 @@ class Menu extends Component {
     render() {
         return(
             <div>
-                <div class="ui menu">
-                    <a class="item"  href="#burger">
+                <div className="ui menu">
+                    <a className="item" href="#burger">
                         <Logo/>
                     </a>
-                    <a class="active item" href="#burger">
+                    <a className="active item" href="#burger">
                         Burger Builder
                     </a>
-                    <a class="item"  href="#burger">
+                    <a className="item" href="#burger">
                         Checkout
                         </a>
                 </div>
