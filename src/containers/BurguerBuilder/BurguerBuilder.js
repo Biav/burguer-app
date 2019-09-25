@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/Auxiliar';
 import Burguer from '../../components/Burger/Burger';
 import BurgerControls from '../../components/Burger/BurgerControls/BurgerControls';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../axios-order';
 
 class BurguerBuilder extends Component {
 
@@ -26,7 +28,8 @@ class BurguerBuilder extends Component {
                     price: 2
                 }
             },
-            price: 4
+            price: 4,
+            loading: false
         };
 
         this.initialState = {
@@ -82,6 +85,43 @@ class BurguerBuilder extends Component {
         });                                   
     }
 
+    purchaseOrder = () => {
+
+        this.setState({
+            loading: true
+        });
+
+        const order = {
+            ingredients: this.props.ingredients,
+            price: this.props.currentPrice,
+            user: {
+                name: "Teste 1",
+                email: "teste1@gmail.com",
+                address: {
+                    street: "Street 1",
+                    zipCode: "123456",
+                    state: "CA",
+                    country: "US"
+                }
+            }
+        }
+
+        axios.post("/order", order)
+             .then(response => {
+                this.setState({
+                    loading: false
+                })
+                console.log(response)
+             })
+             .catch(error => {
+                this.setState({
+                    loading: false
+                })
+                console.log(error)
+             });
+
+    }
+
 
     render(){
         return (
@@ -92,10 +132,12 @@ class BurguerBuilder extends Component {
                     addIngredient = { this.addIngredientHandler } 
                     removeIngredient = { this.removeIngredient } 
                     currentPrice = { this.state.price }
-                    cancelBurger = { this.cancelBurger }/>
+                    cancelBurger = { this.cancelBurger }
+                    loading = { this.state.loading }
+                    purchaseOrder = { this.purchaseOrder }/>
             </Aux>
         );
     }
 }
 
-export default BurguerBuilder;
+export default withErrorHandler(BurguerBuilder, axios);

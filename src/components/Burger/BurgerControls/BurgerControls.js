@@ -9,8 +9,6 @@ class BurgerControls extends Component {
 
         const burgerIngredients = Object.keys(this.props.ingredients).map((ingredient, index) => {
             
-            console.log(this.props.ingredients[ingredient].total);
-
             let buttonDisabled = (this.props.ingredients[ingredient].total > 0) ? false : true;
 
             return (
@@ -25,7 +23,9 @@ class BurgerControls extends Component {
                 {burgerIngredients}
                 <Order ingredients = { this.props.ingredients } 
                        currentPrice = { this.props.currentPrice }
-                       cancelBurger = { () => this.props.cancelBurger() }/>
+                       cancelBurger = { () => this.props.cancelBurger() }
+                       loading = { this.props.loading }
+                       purchaseOrder = { this.props.purchaseOrder }/>
             </div>
         )
     }
