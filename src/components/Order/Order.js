@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './Order.css';
 import { Button, Modal, Header, Dimmer, Loader } from 'semantic-ui-react'
 
 class Order extends Component {

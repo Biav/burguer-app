@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/Auxiliar';
 import Burguer from '../../components/Burger/Burger';
 import BurgerControls from '../../components/Burger/BurgerControls/BurgerControls';
+import { Message } from 'semantic-ui-react'
+import './BurguerBuilder.css';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-order';
 
@@ -10,31 +12,29 @@ class BurguerBuilder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ingredients: {
-                salad: {
-                    total: 0,
-                    price: 0.4
-                },
-                cheese: {
-                    total: 0,
-                    price: 1
-                },
-                meat: {
-                    total: 0,
-                    price: 2
-                },
-                bacon: {
-                    total: 0,
-                    price: 2
-                }
-            },
+            ingredients: [],
             price: 4,
-            loading: false
+            loading: false, 
+            error: null
         };
 
         this.initialState = {
             ...this.state
         }
+    }
+
+    componentDidMount () {
+        axios.get('/ingredients.json')
+        .then((response)=>{
+            this.setState({
+                ingredients: response.data
+            })
+        }).catch((err) => {
+            console.error(err);
+            this.setState({
+                error: "Error to load the ingredients"
+            })
+        });
     }
 
     cancelBurger = () => {
@@ -106,7 +106,7 @@ class BurguerBuilder extends Component {
             }
         }
 
-        axios.post("/order", order)
+        axios.post("/order.json", order)
              .then(response => {
                 this.setState({
                     loading: false
@@ -122,11 +122,14 @@ class BurguerBuilder extends Component {
 
     }
 
-
     render(){
-        return (
+
+        let showIngredients;
+        
+        if (!this.state.error) {
+            showIngredients = (
             <Aux>
-                <Burguer ingredients = {this.state.ingredients}/>
+                <Burguer ingredients = { this.state.ingredients } />
                 <p> Current price: <b> ${ this.state.price } </b> </p>
                 <BurgerControls ingredients = {this.state.ingredients}
                     addIngredient = { this.addIngredientHandler } 
@@ -135,7 +138,17 @@ class BurguerBuilder extends Component {
                     cancelBurger = { this.cancelBurger }
                     loading = { this.state.loading }
                     purchaseOrder = { this.purchaseOrder }/>
+            </Aux>);
+
+        } else {
+            showIngredients = <Message class="alert"> { this.state.error } </Message>;
+        }
+
+        return (
+            <Aux>
+                { showIngredients }
             </Aux>
+            
         );
     }
 }
