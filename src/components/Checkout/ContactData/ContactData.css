@@ -1,0 +1,12 @@
+.contact-data {
+    display: flex;
+    justify-content: center;
+}
+
+.form {
+    width: 70%;
+}
+
+.field {
+    text-align: left;
+}

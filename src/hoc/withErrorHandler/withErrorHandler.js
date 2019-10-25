@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Aux from '../Auxiliar';
-import { Button, Modal} from 'semantic-ui-react'
+import { Modal } from 'semantic-ui-react'
 
 
 const withErrorHandler = (WrappedComponent, axios) => {
