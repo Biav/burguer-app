@@ -7,25 +7,25 @@ class ContactData extends Component {
     render() {
         return (
             <Aux>
-                <div class="contact-data">
-                    <form class="ui form">
-                        <div class="field">
+                <div className="contact-data">
+                    <form className="ui form">
+                        <div className="field">
                             <label> Name</label>
                             <input placeholder="Name" />
                         </div>
-                        <div class="field">
+                        <div className="field">
                             <label>Email</label>
                             <input placeholder="Email" />
                         </div>
-                        <div class="field">
+                        <div className="field">
                             <label>Street</label>
                             <input placeholder="Street" />
                         </div>
-                        <div class="field">
+                        <div className="field">
                             <label>Zip Code</label>
                             <input placeholder="Zip Code" />
                         </div>
-                        <button type="submit" class="ui button">Submit</button>
+                        <button type="button" className="ui button" onClick = {this.props.orderHandler}>Submit</button>
                     </form>
                 </div>
             </Aux>
