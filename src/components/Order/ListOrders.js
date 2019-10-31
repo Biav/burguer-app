@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Aux from './../../hoc/Auxiliar';
 import axios from './../../axios-order';
-import ListOrder from './../Order/ListOrder';
+import ListOrder from './../Order/ListOrder/ListOrder';
 import withErrorHandler from './../../hoc/withErrorHandler/withErrorHandler';
 
 class ListOrders extends Component {
@@ -45,14 +45,16 @@ class ListOrders extends Component {
     render(){
         return(
             <Aux>
-                {
-                    this.state.listOrder.map((orders)=> (
-                        <ListOrder id = { orders.id } 
-                                   name = { orders.name }
-                                   ingredients = {orders.ingredients }
-                                   total = {orders.total }/>
-                    ))
-                }
+                <div className="list-orders">
+                    {
+                        this.state.listOrder.map((orders)=> (
+                            <ListOrder key = { orders.id }  id = { orders.id } 
+                                    name = { orders.name }
+                                    ingredients = {orders.ingredients }
+                                    total = {orders.total }/>
+                        ))
+                    }
+                </div>
             </Aux>
         );
     }

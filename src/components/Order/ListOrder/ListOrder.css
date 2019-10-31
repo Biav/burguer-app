@@ -1,0 +1,10 @@
+.list-orders {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.card {
+    height: 150px;
+}
