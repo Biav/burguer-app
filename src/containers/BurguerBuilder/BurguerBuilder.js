@@ -4,7 +4,9 @@ import Burguer from '../../components/Burger/Burger';
 import BurgerControls from '../../components/Burger/BurgerControls/BurgerControls';
 import { Message } from 'semantic-ui-react'
 import './BurguerBuilder.css';
+import * as actionTypes from '../../store/actions';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import { connect } from 'react-redux';
 import axios from '../../axios-order';
 
 class BurguerBuilder extends Component {
@@ -37,54 +39,6 @@ class BurguerBuilder extends Component {
         });
     }
 
-    cancelBurger = () => {
-
-        let ingredients = {
-            ...this.initialState.ingredients
-        };
-
-        Object.keys(ingredients).map((ingredient)=>{
-            return ingredients[ingredient].total = 0;
-        });
-
-        this.setState(this.initialState);
-    }
-
-    addIngredientHandler = (ingredient) => {
-        let burgerIngredients = {
-            ...this.state.ingredients
-        };
-        
-        burgerIngredients[ingredient].total += 1;
-
-        let priceTotal = parseFloat(this.state.price)
-                         + burgerIngredients[ingredient].total 
-                         * parseFloat(burgerIngredients[ingredient].price);
-
-        this.setState({
-            ingredients: burgerIngredients,
-            price: (priceTotal).toFixed(2)
-        });
-    }
-
-    removeIngredient = (ingredient) => {
-
-        let burgerIngredients = {
-            ...this.state.ingredients
-        }
-
-        burgerIngredients[ingredient].total = (burgerIngredients[ingredient].total > 0) ? 
-                                               burgerIngredients[ingredient].total - 1 : 0;
-
-        let priceTotal = parseFloat(this.state.price)
-                        - parseFloat(burgerIngredients[ingredient].price);
-
-        this.setState({
-            ingredients: burgerIngredients,
-            price: (priceTotal).toFixed(2)
-        });                                   
-    }
-
     purchaseOrder = () => {
         this.props.history.push("/checkout");
     }
@@ -96,13 +50,13 @@ class BurguerBuilder extends Component {
         if (!this.state.error) {
             showIngredients = (
             <Aux>
-                <Burguer ingredients = { this.state.ingredients } />
-                <p> Current price: <b> ${ this.state.price } </b> </p>
-                <BurgerControls ingredients = {this.state.ingredients}
-                    addIngredient = { this.addIngredientHandler } 
-                    removeIngredient = { this.removeIngredient } 
-                    currentPrice = { this.state.price }
-                    cancelBurger = { this.cancelBurger }
+                <Burguer ingredients = { this.props.ingredients } />
+                <p> Current price: <b> ${ this.props.price } </b> </p>
+                <BurgerControls ingredients = {this.props.ingredients}
+                    addIngredient = { this.props.addIngredientHandler } 
+                    removeIngredient = { this.props.removeIngredientHandler } 
+                    currentPrice = { this.props.price }
+                    cancelBurger = { this.props.cancelBurgerHandler }
                     loading = { this.state.loading }
                     purchaseOrder = { this.purchaseOrder }/>
             </Aux>);
@@ -120,4 +74,19 @@ class BurguerBuilder extends Component {
     }
 }
 
-export default withErrorHandler(BurguerBuilder, axios);
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        price: state.price
+    }
+}
+
+const mapDispatchToProps = dispacth => {
+    return {
+        addIngredientHandler: (ingredient) => dispacth({type: actionTypes.addIngredients, ingredient: ingredient}),
+        removeIngredientHandler: (ingredient) => dispacth({type: actionTypes.removeIngredients, ingredient: ingredient}),
+        cancelBurgerHandler: () => dispacth({type: actionTypes.cancelBurger})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurguerBuilder, axios));

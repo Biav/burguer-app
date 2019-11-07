@@ -7,6 +7,10 @@
     width: 70%;
 }
 
+.srv-validation-message {
+    color: #e74c3c;
+}
+
 .field {
     text-align: left;
 }
