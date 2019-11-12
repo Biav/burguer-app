@@ -4,39 +4,15 @@ import Burguer from '../../components/Burger/Burger';
 import BurgerControls from '../../components/Burger/BurgerControls/BurgerControls';
 import { Message } from 'semantic-ui-react'
 import './BurguerBuilder.css';
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderAction from '../../store/actions/';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import axios from '../../axios-order';
 
 class BurguerBuilder extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            ingredients: [],
-            price: 4,
-            loading: false, 
-            error: null
-        };
-
-        this.initialState = {
-            ...this.state
-        }
-    }
-
     componentDidMount () {
-        axios.get('/ingredients.json')
-        .then((response)=>{
-            this.setState({
-                ingredients: response.data
-            })
-        }).catch((err) => {
-            console.error(err);
-            this.setState({
-                error: "Error to load the ingredients"
-            })
-        });
+      this.props.initIngredients();
     }
 
     purchaseOrder = () => {
@@ -47,7 +23,7 @@ class BurguerBuilder extends Component {
 
         let showIngredients;
         
-        if (!this.state.error) {
+        if (!this.props.error) {
             showIngredients = (
             <Aux>
                 <Burguer ingredients = { this.props.ingredients } />
@@ -57,12 +33,12 @@ class BurguerBuilder extends Component {
                     removeIngredient = { this.props.removeIngredientHandler } 
                     currentPrice = { this.props.price }
                     cancelBurger = { this.props.cancelBurgerHandler }
-                    loading = { this.state.loading }
+                    loading = { this.props.loading }
                     purchaseOrder = { this.purchaseOrder }/>
             </Aux>);
 
         } else {
-            showIngredients = <Message class="alert"> { this.state.error } </Message>;
+            showIngredients = <Message class="alert"> { this.props.error } </Message>;
         }
 
         return (
@@ -77,15 +53,18 @@ class BurguerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price: state.price
+        price: state.price,
+        error: state.error,
+        loading: state.loading
     }
 }
 
 const mapDispatchToProps = dispacth => {
     return {
-        addIngredientHandler: (ingredient) => dispacth({type: actionTypes.addIngredients, ingredient: ingredient}),
-        removeIngredientHandler: (ingredient) => dispacth({type: actionTypes.removeIngredients, ingredient: ingredient}),
-        cancelBurgerHandler: () => dispacth({type: actionTypes.cancelBurger})
+        addIngredientHandler: (ingredient) => dispacth(burgerBuilderAction.addIngredients(ingredient)),
+        removeIngredientHandler: (ingredient) => dispacth(burgerBuilderAction.removeIngredientHandler(ingredient)),
+        cancelBurgerHandler: () => dispacth(burgerBuilderAction.cancelBurger()),
+        initIngredients: () => dispacth(burgerBuilderAction.initIngredients())
     }
 }
 

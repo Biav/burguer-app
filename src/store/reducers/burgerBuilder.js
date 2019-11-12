@@ -1,22 +1,5 @@
 const initialState = {
-    ingredients: {
-        salad: {
-            total: 0,
-            price: 0.4
-        },
-        cheese: {
-            total: 0,
-            price: 1
-        },
-        meat: {
-            total: 0,
-            price: 2
-        },
-        bacon: {
-            total: 0,
-            price: 2
-        }
-    },
+    ingredients: {},
     error: null,
     loading: false, 
     price: 4
@@ -60,6 +43,17 @@ const reducer = (state = initialState, action) => {
                 price: (priceTotalDelete).toFixed(2)
             }
         
+        case "SET_INGREDIENTS": 
+            return {
+                ...state,
+                ingredients: action.ingredients,
+                error: false
+            }
+        case "ERROR_INGREDIENTS":
+            return {
+                ...state,
+                error: action.error
+            }
         case "CANCEL_BURGER":
             let ingredients = {
                 ...initialState.ingredients

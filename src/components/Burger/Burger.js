@@ -6,7 +6,7 @@ class Burguer extends Component {
     render () {
         let burger = [],
             burgerIngredients = 0;
-
+      
         Object.keys(this.props.ingredients).map((ingredient, index) => {
             let total = this.props.ingredients[ingredient];
             if(total.total > 0) {
