@@ -3,4 +3,7 @@ export {
     removeIngredientHandler,
     initIngredients,
     cancelBurger
-} from './burgerBuilder'
+} from './burgerBuilder';
+export {
+    initOrders
+} from './orders'

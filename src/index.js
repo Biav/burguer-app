@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import reducer from './store/reducers/burgerBuilder';
-import { createStore, applyMiddleware, compose } from 'redux';
+import burgerBuilder from './store/reducers/burgerBuilder';
+import listOrders from './store/reducers/orders';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
@@ -12,7 +13,12 @@ import 'semantic-ui-css/semantic.min.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducer, composeEnhancers(
+const rootReducer = combineReducers({
+    burgerBuilder: burgerBuilder,
+    listOrders: listOrders
+});
+
+const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
 
