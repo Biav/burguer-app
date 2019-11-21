@@ -1,3 +1,5 @@
+import * as actionsTypes from '../actions/actions';
+
 const initialState = {
     orders: [], 
     error: null
@@ -5,12 +7,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "LIST_ORDERS":
+        case actionsTypes.listOrders:
             return {
                 ...state,
                 orders: action.orders
             }
-        case "FAILED_ORDERS":
+        case actionsTypes.failedOrders:
             return {
                 ...state,
                 error: action.error

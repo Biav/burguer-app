@@ -1,3 +1,5 @@
+import * as actionsTypes from '../actions/actions';
+
 const initialState = {
     ingredients: {},
     error: null,
@@ -9,7 +11,7 @@ const reducer = (state = initialState, action) => {
 
     switch(action.type){
 
-        case "ADD_INGREDIENT":
+        case actionsTypes.addIngredients:
             let burgerIngredients = {
                 ...state.ingredients
             };
@@ -26,7 +28,7 @@ const reducer = (state = initialState, action) => {
                 price: (priceTotal).toFixed(2)
             }
 
-        case "REMOVE_INGREDIENT": 
+        case actionsTypes.removeIngredients: 
             let burgerIngDelete = {
                 ...state.ingredients
             }
@@ -43,18 +45,18 @@ const reducer = (state = initialState, action) => {
                 price: (priceTotalDelete).toFixed(2)
             }
         
-        case "SET_INGREDIENTS": 
+        case actionsTypes.setIngredients: 
             return {
                 ...state,
                 ingredients: action.ingredients,
                 error: false
             }
-        case "ERROR_INGREDIENTS":
+        case actionsTypes.errorIngredients:
             return {
                 ...state,
                 error: action.error
             }
-        case "CANCEL_BURGER":
+        case actionsTypes.cancelBurger:
             let ingredients = {
                 ...initialState.ingredients
             };

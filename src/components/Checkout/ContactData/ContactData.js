@@ -18,6 +18,8 @@ class ContactData extends Component {
             zipCode: '', 
         }
 
+        this.validator = new SimpleReactValidator({autoForceUpdate: this});
+
     }
 
     orderHandler = () => {
@@ -54,10 +56,6 @@ class ContactData extends Component {
              });
     }
 
-
-    componentWillMount () {
-        this.validator = new SimpleReactValidator({autoForceUpdate: this});
-    }
 
     handleChange (name, event) {
         this.setState({ [name]: event.target.value })

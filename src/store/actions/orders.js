@@ -1,4 +1,4 @@
-import * as actionTypes from './orderActions';
+import * as actionTypes from './actions';
 import axios from '../../axios-order';
 
 export const listOrders = (orders) => {
@@ -23,16 +23,15 @@ export const initOrders = () => {
         .then((res) => {
            orders = res.data;
 
-           Object.keys(orders).map((order) => {
-               listOrder.push({
-                   id: order,
-                   name: orders[order].user.name,
-                   ingredients: orders[order].ingredients,
-                   total: orders[order].price
+           listOrder = Object.keys(orders).map((item) => {
+              return ({
+                   id: item,
+                   name: orders[item].user.name,
+                   ingredients: orders[item].ingredients,
+                   total: orders[item].price
                });
            });
 
-           console.log(listOrder);
            dispatch(listOrders(listOrder));
            
         }).catch((err) => {

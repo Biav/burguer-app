@@ -6,20 +6,14 @@ import { Modal } from 'semantic-ui-react'
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
 
-        state = { 
-            error: null,
-            modalOpen: false
-        }
+        constructor(props) {
+            super(props);
 
-        handleOpen = () => {
-          this.setState({ modalOpen: true })
-        }
-      
-        handleClose = () => {
-          this.setState({ modalOpen: false })
-        }
+            this.state = { 
+                error: null,
+                modalOpen: false
+            }
 
-        componentWillMount() {
             this.requestInterceptor = axios.interceptors.request.use(req => {
                 this.setState({
                     error: null,
@@ -34,6 +28,15 @@ const withErrorHandler = (WrappedComponent, axios) => {
                     modalOpen: true
                 });
             });
+        }
+
+        
+        handleOpen = () => {
+          this.setState({ modalOpen: true })
+        }
+      
+        handleClose = () => {
+          this.setState({ modalOpen: false })
         }
 
         componentWillUnmount() {

@@ -1,4 +1,4 @@
-import * as actionsTypes from './burgerActions';
+import * as actionsTypes from './actions';
 import axios from '../../axios-order';
 
 export const addIngredients = (ingredient) => {
