@@ -16,6 +16,7 @@ export const failedOrders = (error) => {
 }
 
 export const initOrders = () => {
+    debugger
     return dispatch => {
         let orders, listOrder = [];
 

@@ -5,6 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import burgerBuilder from './store/reducers/burgerBuilder';
 import listOrders from './store/reducers/orders';
+import loginUser from './store/reducers/login';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
@@ -15,7 +16,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilder,
-    listOrders: listOrders
+    listOrders: listOrders,
+    loginUser: loginUser
 });
 
 const store = createStore(rootReducer, composeEnhancers(

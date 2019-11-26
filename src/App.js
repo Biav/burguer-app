@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import BurguerBuilder from './containers/BurguerBuilder/BurguerBuilder';
 import Layout from './components/Layout/Layout';
 import Checkout from './components/Checkout/Checkout';
+import Login from './components/Login/Login';
 import ListOrders from './components/Order/ListOrders'
 import { Route } from 'react-router-dom';
 import './App.css';
@@ -13,7 +14,8 @@ class App extends Component {
         <Layout>
           <Route path="/checkout" component={ Checkout } />
           <Route path="/orders" component={ ListOrders }/>
-          <Route path="/" exact component={ BurguerBuilder } />
+          <Route path="/burger" exact component={ BurguerBuilder } />
+          <Route path="/" exact component={Login} />
         </Layout>
       </div>
     );

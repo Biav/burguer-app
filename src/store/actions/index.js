@@ -6,4 +6,7 @@ export {
 } from './burgerBuilder';
 export {
     initOrders
-} from './orders'
+} from './orders';
+export {
+    loginStart
+} from './login';

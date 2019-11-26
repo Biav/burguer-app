@@ -8,9 +8,9 @@ class Menu extends Component {
             <div>
                 <div className="ui menu">
                     <a className="item" href="#burger"><Logo/></a>
-                    <NavLink className="item" exact to={"/"}> Burger </NavLink>
-                    <NavLink className="item" exact to={"/checkout"} > Checkout </NavLink>
+                    <NavLink className="item" exact to={"/burger"}> Burger </NavLink>
                     <NavLink className="item" exact to={"/orders"} > Orders </NavLink>
+                    <NavLink className="item" exact to={"/"}> Login </NavLink>
                  </div>
             </div>
         );
