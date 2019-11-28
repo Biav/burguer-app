@@ -14,7 +14,7 @@ const reducer = (state = initialSate, action) => {
         case actionsTypes.loginUser:
             return {
                 ...state,
-                userId: action.userId,
+                userId: action.user,
                 token: action.token
             }
         
@@ -26,7 +26,9 @@ const reducer = (state = initialSate, action) => {
 
         case actionsTypes.logoutUser:
             return  {
-                ...state
+                ...state,
+                user: action.user,
+                token: action.token
             }
         
         default:

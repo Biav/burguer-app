@@ -25,11 +25,8 @@ export const loginStart = (user, password, isSignUp) => {
             url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + API_KEY;
         }
         
-        debugger
-
         axios.post(url, login)
         .then((res)=>{
-            debugger
             console.log(res.data);
             dispatch(loginUser(res.data.email, res.data.idToken));
         })
@@ -47,8 +44,18 @@ export const loginFailed = (err) => {
     }
 }
 
-export const logoutUser = () => {
+export const doLogout = () => {
+    return dispatch => {
+        let token = null;
+        let user =  null;
+        dispatch(logoutUser(user, token));
+    }
+}
+
+export const logoutUser = (user, token) => {
     return {
-        type: actionTypes.logoutUser
+        type: actionTypes.logoutUser,
+        user: user,
+        token: token
     }
 }
