@@ -15,12 +15,11 @@ export const failedOrders = (error) => {
     }
 }
 
-export const initOrders = () => {
-    debugger
+export const initOrders = (token) => {
     return dispatch => {
         let orders, listOrder = [];
 
-        axios.get('/order.json')
+        axios.get('/order.json?auth=' + token)
         .then((res) => {
            orders = res.data;
 

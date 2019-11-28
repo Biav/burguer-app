@@ -57,8 +57,8 @@ class Login extends Component {
         let errorMessage;
 
         if(this.props.error === 400) {
-            errorMessage = <div class="ui negative message">
-                                    <i class="close icon"></i>
+            errorMessage = <div className="ui negative message">
+                                    <i className="close icon"></i>
                                     <p>Login or Password wrong</p>
                                 </div>;
         }

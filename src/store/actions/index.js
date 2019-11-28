@@ -8,5 +8,6 @@ export {
     initOrders
 } from './orders';
 export {
-    loginStart
+    loginStart, 
+    doLogout
 } from './login';

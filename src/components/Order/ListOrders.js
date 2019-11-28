@@ -9,7 +9,7 @@ import withErrorHandler from './../../hoc/withErrorHandler/withErrorHandler';
 class ListOrders extends Component {
 
     componentDidMount(){
-        this.props.initOrders();
+        this.props.initOrders(this.props.token);
     }
     
     render(){
@@ -36,13 +36,14 @@ class ListOrders extends Component {
 
 const mapStateToProps = state => {
     return {
-        orders: state.listOrders.orders
+        orders: state.listOrders.orders,
+        token: state.loginUser.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        initOrders: () => dispatch(ordersAction.initOrders())
+        initOrders: (token) => dispatch(ordersAction.initOrders(token))
     }
 }
 

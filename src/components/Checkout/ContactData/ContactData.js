@@ -41,7 +41,9 @@ class ContactData extends Component {
             }
         }
 
-        axios.post("/order.json", order)
+        let token = (this.props.token)? this.props.token : null;
+
+        axios.post("/order.json?auth=" + token, order)
              .then(response => {
                 this.setState({
                     loading: false
@@ -127,7 +129,8 @@ class ContactData extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
-        price: state.burgerBuilder.price
+        price: state.burgerBuilder.price,
+        token: state.loginUser.token
     }
 }
 
