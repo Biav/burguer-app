@@ -9,19 +9,22 @@ import withErrorHandler from './../../hoc/withErrorHandler/withErrorHandler';
 class ListOrders extends Component {
 
     componentDidMount(){
-        this.props.initOrders(this.props.token);
+        this.props.initOrders(this.props.token, this.props.userId);
     }
-    
-    render(){
-        let listOrders = []; 
 
-        if( this.props.orders ) {
+    render(){
+        
+        let listOrders = [];
+
+        if( this.props.orders && this.props.orders.length > 0) {
             listOrders =  this.props.orders.map((orders)=> {
                 return (<ListOrder key = { orders.id }  id = { orders.id } 
                         name = { orders.name }
                         ingredients = {orders.ingredients }
                         total = {orders.total }/>)
                 })
+        } else {
+            listOrders = <h2>No Orders</h2>
         }
 
         return(
@@ -37,13 +40,14 @@ class ListOrders extends Component {
 const mapStateToProps = state => {
     return {
         orders: state.listOrders.orders,
+        userId: state.loginUser.userId,
         token: state.loginUser.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        initOrders: (token) => dispatch(ordersAction.initOrders(token))
+        initOrders: (token, userId) => dispatch(ordersAction.initOrders(token, userId))
     }
 }
 

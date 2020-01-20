@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import Aux from './../../../hoc/Auxiliar';
 import SimpleReactValidator from 'simple-react-validator';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import axios from './../../../axios-order';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import './ContactData.css';
 
 class ContactData extends Component {
@@ -13,7 +16,6 @@ class ContactData extends Component {
 
         this.state = {
             name: '',
-            email: '', 
             street: '', 
             zipCode: '', 
         }
@@ -24,16 +26,13 @@ class ContactData extends Component {
 
     orderHandler = () => {
 
-        this.setState({
-            loading: true
-        });
-
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
+            userId: this.props.userId,
             user: {
                 name: this.state.name,
-                email: this.state.email,
+                email: this.props.user,
                 address: {
                     street: this.state.street,
                     zipCode: this.state.zipCode
@@ -42,22 +41,24 @@ class ContactData extends Component {
         }
 
         let token = (this.props.token)? this.props.token : null;
+        let notification = 2000;
 
         axios.post("/order.json?auth=" + token, order)
              .then(response => {
-                this.setState({
-                    loading: false
-                })
-                console.log(response)
+                NotificationManager.success('Success message', 'Order Success');
+                this.redirectOrders();
              })
              .catch(error => {
-                this.setState({
-                    loading: false
-                })
-                console.log(error)
+                NotificationManager.error('Success message', 'Order Error');
+                this.redirectOrders();
              });
     }
 
+    redirectOrders () {
+        setTimeout( () => {
+            this.props.history.push('/orders');
+        }, 3000)
+    }
 
     handleChange (name, event) {
         this.setState({ [name]: event.target.value })
@@ -75,6 +76,7 @@ class ContactData extends Component {
     render() {
         return (
             <Aux>
+                <NotificationContainer/>
                 <div className="contact-data">
                     <form className="ui form">
                         <div className="field">
@@ -85,16 +87,6 @@ class ContactData extends Component {
                                    onBlur={() => this.validator.showMessageFor('name')}/>
                             
                             {this.validator.message('name', this.state.name, 'required')}
-
-                        </div>
-                        <div className="field">
-                            <label>Email</label>
-                            <input placeholder="Email" 
-                                   value = { this.state.email }
-                                   onChange = { (e) => this.handleChange('email', e) } 
-                                   onBlur={() => this.validator.showMessageFor('email')}/>
-
-                            {this.validator.message('email', this.state.email, 'required|email')}
 
                         </div>
                         <div className="field">
@@ -130,8 +122,10 @@ const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.price,
+        user: state.loginUser.user,
+        userId: state.loginUser.userId,
         token: state.loginUser.token
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+export default connect(mapStateToProps)(withRouter(ContactData));

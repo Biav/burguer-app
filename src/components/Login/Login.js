@@ -22,35 +22,26 @@ class Login extends Component {
         this.setState({[name]: event.target.value})
     }
 
-    submitForm = () => {
+    submitForm = (isLogin) => {
+        let isSignup = (isLogin) ? false : true;
+
         if (this.validator.allValid()) {
             this.setState({
-                isSignup: false
+                isSignup: isSignup
             }, () => {
-                this.props.signUp(this.state.user, this.state.password, this.state.isSignup);
+
+                this.props.signUp(this.state.user, this.state.password, this.state.isSignup).then(res => {
+                    if(isLogin && this.props.user) {
+                        this.props.history.push("/burger");
+                    }
+                });
+                
             });
         } else {
-          this.validation();
+            this.validator.showMessages();
+            this.forceUpdate();
         }
     } 
-
-    signUp = () => {
-        if (this.validator.allValid()) {
-            this.setState({
-                isSignup: true
-            }, () => {
-                this.props.signUp(this.state.user, this.state.password, this.state.isSignup);
-            });
-        } else {
-            this.validation();
-        }
-    }
-
-    validation = () => {
-        this.validator.showMessages();
-        this.forceUpdate();
-    } 
-
 
     render() {
 
@@ -86,8 +77,8 @@ class Login extends Component {
                         {this.validator.message('password', this.state.password, 'required')}
                    
                     </div>
-                    <button className="ui button" type="button" onClick = { this.signUp }>Register</button>
-                    <button className="ui primary button" type="button" onClick = { this.submitForm } >Login</button>
+                    <button className="ui button" type="button" onClick = { ()=> this.submitForm(false) }>Register</button>
+                    <button className="ui primary button" type="button" onClick = { ()=> this.submitForm(true) } >Login</button>
                  </form>
 
                  { errorMessage }
@@ -106,7 +97,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        signUp: (user, password, isSignup) => dispatch(loginActions.loginStart(user, password, isSignup))
+        signUp: (user, password, isSignup) => dispatch(loginActions.loginStart(user, password, isSignup)),
+        checkLogin: () => dispatch(loginActions.checkLogin())
     } 
 }
 

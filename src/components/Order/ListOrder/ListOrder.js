@@ -6,7 +6,7 @@ class ListOrder extends Component {
     render() {
         
         let ingredients = null;
-
+        
         if(this.props.ingredients) {
             ingredients = Object.keys(this.props.ingredients).map((ingredient) => {
                 return(

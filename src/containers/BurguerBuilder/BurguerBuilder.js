@@ -16,7 +16,11 @@ class BurguerBuilder extends Component {
     }
 
     purchaseOrder = () => {
-        this.props.history.push("/checkout");
+        if(this.props.token) {
+            this.props.history.push("/checkout");
+        } else {
+            this.props.history.push("/");
+        }
     }
 
     render(){
@@ -55,6 +59,7 @@ const mapStateToProps = state => {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.price,
         error: state.burgerBuilder.error,
+        token: state.loginUser.token,
         loading: state.burgerBuilder.loading
     }
 }

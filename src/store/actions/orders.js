@@ -15,29 +15,27 @@ export const failedOrders = (error) => {
     }
 }
 
-export const initOrders = (token) => {
+export const initOrders = (token, userId) => {
     return dispatch => {
         let orders, listOrder = [];
 
-        axios.get('/order.json?auth=' + token)
-        .then((res) => {
-           orders = res.data;
+        axios.get('/order.json?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"')
+        .then( res => {
+            orders = res.data;
+            
+            listOrder = Object.keys(orders).map((item) => {
+                return ({
+                    id: item,
+                    name: orders[item].user.name,
+                    ingredients: orders[item].ingredients,
+                    total: orders[item].price
+                });
+            });
 
-           listOrder = Object.keys(orders).map((item) => {
-              return ({
-                   id: item,
-                   name: orders[item].user.name,
-                   ingredients: orders[item].ingredients,
-                   total: orders[item].price
-               });
-           });
-
-           dispatch(listOrders(listOrder));
-           
+            dispatch(listOrders(listOrder));
+        
         }).catch((err) => {
             dispatch(failedOrders(err));
-            console.error(err);
-           }
-        );
+        });
     }
 }

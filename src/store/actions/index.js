@@ -9,5 +9,6 @@ export {
 } from './orders';
 export {
     loginStart, 
+    checkLogin,
     doLogout
 } from './login';

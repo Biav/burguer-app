@@ -14,7 +14,8 @@ const reducer = (state = initialSate, action) => {
         case actionsTypes.loginUser:
             return {
                 ...state,
-                userId: action.user,
+                user: action.user,
+                userId: action.userId,
                 token: action.token
             }
         
@@ -28,6 +29,7 @@ const reducer = (state = initialSate, action) => {
             return  {
                 ...state,
                 user: action.user,
+                userId: action.userId,
                 token: action.token
             }
         
